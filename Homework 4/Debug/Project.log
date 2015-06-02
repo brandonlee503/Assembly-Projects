@@ -1,0 +1,22 @@
+﻿Build started 5/10/2015 3:56:11 PM.
+     1>Project "C:\Users\Brandon Lee\Google Drive\CS 271\CS271 Projects\Homework 4\Project.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\Project.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       _MASM:
+         Assembling [Inputs]...
+         cmd.exe /C "C:\Users\Brandon Lee\AppData\Local\Temp\tmp18a2232310534edb879a5cd908909175.cmd"
+         ml.exe /c /nologo /Zi /Fo"Debug\Project04.obj" /Fl"Project.lst" /I "c:\Irvine" /W3 /errorReport:prompt  /TaProject04.asm
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Brandon Lee\Google Drive\CS 271\CS271 Projects\Homework 4\Debug\Project.exe" /NOLOGO /LIBPATH:c:\Irvine user32.lib irvine32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Project.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Brandon Lee\Google Drive\CS 271\CS271 Projects\Homework 4\Debug\Project.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"C:\Users\Brandon Lee\Google Drive\CS 271\CS271 Projects\Homework 4\Debug\Project.lib" /MACHINE:X86 Debug\Project04.obj
+         LINK : C:\Users\Brandon Lee\Google Drive\CS 271\CS271 Projects\Homework 4\Debug\Project.exe not found or not built by the last incremental link; performing full link
+         Project.vcxproj -> C:\Users\Brandon Lee\Google Drive\CS 271\CS271 Projects\Homework 4\Debug\Project.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Brandon Lee\Google Drive\CS 271\CS271 Projects\Homework 4\Debug\Project.exe;#1" /manifest Debug\Project.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Debug\Project.unsuccessfulbuild".
+         Touching "Debug\Project.lastbuildstate".
+     1>Done Building Project "C:\Users\Brandon Lee\Google Drive\CS 271\CS271 Projects\Homework 4\Project.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.66

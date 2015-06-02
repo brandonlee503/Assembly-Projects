@@ -1,0 +1,22 @@
+﻿Build started 5/31/2015 10:18:14 PM.
+     1>Project "C:\Users\Brandon Lee\Google Drive\CS 271\CS271 Projects\Test Project\Project.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\Project.unsuccessfulbuild".
+       _MASM:
+         Assembling [Inputs]...
+         cmd.exe /C "C:\Users\Brandon Lee\AppData\Local\Temp\tmpfcfff957a5c641ff9e3370ce97381c48.cmd"
+         ml.exe /c /nologo /Zi /Fo"Debug\testProject.obj" /Fl"Project.lst" /I "c:\Irvine" /W3 /errorReport:prompt  /TatestProject.asm
+     1>testProject.asm(25): error A2108: use of register assumed to ERROR
+     1>testProject.asm(32): error A2108: use of register assumed to ERROR
+     1>testProject.asm(13): error A2107: cannot have implicit far jump or call to near label
+     1>testProject.asm(14): error A2107: cannot have implicit far jump or call to near label
+     1>testProject.asm(23): error A2107: cannot have implicit far jump or call to near label
+     1>testProject.asm(24): error A2107: cannot have implicit far jump or call to near label
+     1>testProject.asm(29): error A2107: cannot have implicit far jump or call to near label
+     1>testProject.asm(31): error A2107: cannot have implicit far jump or call to near label
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\BuildCustomizations\masm.targets(49,5): error MSB3721: The command "ml.exe /c /nologo /Zi /Fo"Debug\testProject.obj" /Fl"Project.lst" /I "c:\Irvine" /W3 /errorReport:prompt  /TatestProject.asm" exited with code 1.
+     1>Done Building Project "C:\Users\Brandon Lee\Google Drive\CS 271\CS271 Projects\Test Project\Project.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:03.98
