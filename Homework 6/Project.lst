@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 10.00.30319.01	    06/06/15 20:20:51
+Microsoft (R) Macro Assembler Version 10.00.30319.01	    06/06/15 20:32:51
  Assignment 6     (Project06.asm			     Page 1 - 1
 
 
@@ -57,7 +57,7 @@ Microsoft (R) Macro Assembler Version 10.00.30319.01	    06/06/15 20:20:51
 				ENDM
 
 				;Constant for number of inputs
- = 0000000F				THENUM = 15
+ = 0000000A				THENUM = 10
 
  00000000			.data
  00000000  000000FF [			buffer			BYTE	255 DUP(0)
@@ -121,23 +121,23 @@ Microsoft (R) Macro Assembler Version 10.00.30319.01	    06/06/15 20:20:51
 	   65 20 74 72 79
 	   20 61 67 61 69
 	   6E 3A 20 00
- 00000227 59 6F 75 20 65		valueMsg		BYTE	"You entered: ",0
-	   6E 74 65 72 65
-	   64 3A 20 00
- 00000235 54 68 65 20 73		sumMsg			BYTE	"The sum is: ",0
+ 00000227 59 6F 75 72 20		valueMsg		BYTE	"Your input: ",0
+	   69 6E 70 75 74
+	   3A 20 00
+ 00000234 54 68 65 20 73		sumMsg			BYTE	"The sum is: ",0
 	   75 6D 20 69 73
 	   3A 20 00
- 00000242 54 68 65 20 61		averageMsg		BYTE	"The average is: ",0
+ 00000241 54 68 65 20 61		averageMsg		BYTE	"The average is: ",0
 	   76 65 72 61 67
 	   65 20 69 73 3A
 	   20 00
- 00000253 47 6F 6F 64 62		goodbyeMsg		sBYTE	"Goodbye!", 0
+ 00000252 47 6F 6F 64 62		goodbyeMsg		BYTE	"Goodbye!", 0
 	   79 65 21 00
 
- 0000025C 00000000			sum				DWORD	?
- 00000260 00000000			average			DWORD	?
+ 0000025B 00000000			sum				DWORD	?
+ 0000025F 00000000			average			DWORD	?
 
- 00000264				theArray		DWORD	15 DUP(0)
+ 00000263				theArray		DWORD	10 DUP(0)
 
  00000000			.code
  00000000			main PROC
@@ -171,8 +171,8 @@ Microsoft (R) Macro Assembler Version 10.00.30319.01	    06/06/15 20:20:51
 
 				;--------------------------------------------------------------------------------
 				;Set loop controls
- 00000049  B9 0000000F			mov		ecx, THENUM
- 0000004E  BF 00000264 R		mov		edi, OFFSET theArray
+ 00000049  B9 0000000A			mov		ecx, THENUM
+ 0000004E  BF 00000263 R		mov		edi, OFFSET theArray
 
  00000053			userInputLabel:
 				;Display prompt for user input
@@ -185,22 +185,22 @@ Microsoft (R) Macro Assembler Version 10.00.30319.01	    06/06/15 20:20:51
 				;Push onto stack, call ReadVal
  0000005F  68 00000000 R		push	OFFSET buffer
  00000064  68 000000FF			push	SIZEOF buffer
- 00000069  E8 000000D3			call	ReadVal
+ 00000069  E8 000000C9			call	ReadVal
 
 				;Go to next array spot	
  0000006E  A1 00000000 R		mov		eax, DWORD PTR buffer
  00000073  89 07			mov		[edi], eax
  00000075  83 C7 04			add		edi, 4				;For next DWORD in array
 
-				;Loop if not 15 values yet
+				;Loop if not 10 values yet
  00000078  E2 D9			loop	userInputLabel
 
 				;--------------------------------------------------------------------------------	
 				;Show the user what they entered into the array
 
 				;Set loop variables
- 0000007A  B9 0000000F			mov		ecx, THENUM
- 0000007F  BE 00000264 R		mov		esi, OFFSET theArray
+ 0000007A  B9 0000000A			mov		ecx, THENUM
+ 0000007F  BE 00000263 R		mov		esi, OFFSET theArray
  00000084  BB 00000000			mov		ebx, 0					;For calculating sum
 
 				;Display message
@@ -214,78 +214,77 @@ Microsoft (R) Macro Assembler Version 10.00.30319.01	    06/06/15 20:20:51
 				;Calculate the sum | Print numbers to console
  0000009A			sumAgainLabel:
  0000009A  8B 06			mov		eax, [esi]
- 0000009C  03 D8			add		ebx, eax	;add eax to the sum
+ 0000009C  03 D8			add		ebx, eax				;add eax to the sum
 
 				;Push parameters eax and stringTemp | Call WriteVal
  0000009E  50				push	eax
  0000009F  68 000000FF R		push	OFFSET stringTemp
- 000000A4  E8 000000FC			call	WriteVal
- 000000A9  E8 00000000 E		call	CrLf
- 000000AE  83 C6 04			add		esi, 4		;increment the array looper
- 000000B1  E2 E7			loop	sumAgainLabel
+ 000000A4  E8 000000F2			call	WriteVal
+ 000000A9  83 C6 04			add		esi, 4					;increment the array looper
+ 000000AC  E2 EC			loop	sumAgainLabel
 
 				;Display the sum
- 000000B3  8B C3			mov				eax, ebx
- 000000B5  A3 0000025C R		mov				sum, eax
+ 000000AE  8B C3			mov				eax, ebx
+ 000000B0  A3 0000025B R		mov				sum, eax
 					displayString	sumMsg
- 000000BA  52		     1		push	edx
- 000000BB  BA 00000235 R     1		mov		edx, OFFSET sumMsg
- 000000C0  E8 00000000 E     1		call	WriteString
- 000000C5  5A		     1		pop		edx
+ 000000B5  52		     1		push	edx
+ 000000B6  BA 00000234 R     1		mov		edx, OFFSET sumMsg
+ 000000BB  E8 00000000 E     1		call	WriteString
+ 000000C0  5A		     1		pop		edx
 
 				;Push sum and stringTemp paramaters | Call WriteVal
- 000000C6  FF 35 0000025C R		push	sum
- 000000CC  68 000000FF R		push	OFFSET stringTemp
- 000000D1  E8 000000CF			call	WriteVal
- 000000D6  E8 00000000 E		call	CrLf
+ 000000C1  FF 35 0000025B R		push	sum
+ 000000C7  68 000000FF R		push	OFFSET stringTemp
+ 000000CC  E8 000000CA			call	WriteVal
+ 000000D1  E8 00000000 E		call	CrLf
 
 				;--------------------------------------------------------------------------------	
 				;Calculate the average (sum in eax)
 
-				;Clear edx | Move 15 into ebx
- 000000DB  BB 0000000F			mov		ebx, THENUM
- 000000E0  BA 00000000			mov		edx, 0
+				;Clear edx | Move 10 into ebx
+ 000000D6  BB 0000000A			mov		ebx, THENUM
+ 000000DB  BA 00000000			mov		edx, 0
 
-				;Divide the sum by 15
- 000000E5  F7 F3			div		ebx
+				;Divide the sum by 10
+ 000000E0  F7 F3			div		ebx
 
 				;Determine if average needs to be rounded up
- 000000E7  8B C8			mov		ecx, eax
- 000000E9  8B C2			mov		eax, edx
- 000000EB  BA 00000002			mov		edx, 2
- 000000F0  F7 E2			mul		edx
- 000000F2  3B C3			cmp		eax, ebx
- 000000F4  8B C1			mov		eax, ecx
- 000000F6  A3 00000260 R		mov		average, eax
- 000000FB  72 06			jb		noRoundLabel
- 000000FD  40				inc		eax
- 000000FE  A3 00000260 R		mov		average, eax
+ 000000E2  8B C8			mov		ecx, eax
+ 000000E4  8B C2			mov		eax, edx
+ 000000E6  BA 00000002			mov		edx, 2
+ 000000EB  F7 E2			mul		edx
+ 000000ED  3B C3			cmp		eax, ebx
+ 000000EF  8B C1			mov		eax, ecx
+ 000000F1  A3 0000025F R		mov		average, eax
+ 000000F6  72 06			jb		noRoundLabel
+ 000000F8  40				inc		eax
+ 000000F9  A3 0000025F R		mov		average, eax
 
- 00000103			noRoundLabel:
+ 000000FE			noRoundLabel:
 					displayString	averageMsg
- 00000103  52		     1		push	edx
- 00000104  BA 00000242 R     1		mov		edx, OFFSET averageMsg
- 00000109  E8 00000000 E     1		call	WriteString
- 0000010E  5A		     1		pop		edx
+ 000000FE  52		     1		push	edx
+ 000000FF  BA 00000241 R     1		mov		edx, OFFSET averageMsg
+ 00000104  E8 00000000 E     1		call	WriteString
+ 00000109  5A		     1		pop		edx
 
 				;Push parameters average and stringTemp | Call WriteVal
- 0000010F  FF 35 00000260 R		push	average
- 00000115  68 000000FF R		push	OFFSET stringTemp
- 0000011A  E8 00000086			call	WriteVal
- 0000011F  E8 00000000 E		call	CrLf
- 00000124  E8 00000000 E		call	CrLf
+ 0000010A  FF 35 0000025F R		push	average
+ 00000110  68 000000FF R		push	OFFSET stringTemp
+ 00000115  E8 00000081			call	WriteVal
+ 0000011A  E8 00000000 E		call	CrLf
 
 				;--------------------------------------------------------------------------------	
 				;Display goodbye message
+
 					displayString	goodbyeMsg
- 00000129  52		     1		push	edx
- 0000012A  BA 00000253 R     1		mov		edx, OFFSET goodbyeMsg
- 0000012F  E8 00000000 E     1		call	WriteString
- 00000134  5A		     1		pop		edx
- 00000135  E8 00000000 E		call	CrLf
+ 0000011F  52		     1		push	edx
+ 00000120  BA 00000252 R     1		mov		edx, OFFSET goodbyeMsg
+ 00000125  E8 00000000 E     1		call	WriteString
+ 0000012A  5A		     1		pop		edx
+ 0000012B  E8 00000000 E		call	CrLf
 
 					exit		; exit to operating system
- 00000141			main ENDP
+ 00000137			main ENDP
 
 				;----------------------------------------------------------------------------------------
 				; Procedure: ReadVal
@@ -293,122 +292,121 @@ Microsoft (R) Macro Assembler Version 10.00.30319.01	    06/06/15 20:20:51
 				; the digits string to numbers and validates input.
 				; Parameters: OFFSET buffer, SIZEOF buffer
 				;----------------------------------------------------------------------------------------
+ 00000137			readVal PROC
+ 00000137  55				push	ebp
+ 00000138  8B EC			mov		ebp, esp
+ 0000013A  60				pushad
 
- 00000141			readVal PROC
- 00000141  55				push	ebp
- 00000142  8B EC			mov		ebp, esp
- 00000144  60				pushad
-
- 00000145			StartLabel:
- 00000145  8B 55 0C			mov		edx, [ebp+12]	;@address of buffer
- 00000148  8B 4D 08			mov		ecx, [ebp+8]	;size of buffer into ecx
+ 0000013B			StartLabel:
+ 0000013B  8B 55 0C			mov		edx, [ebp+12]	;@address of buffer
+ 0000013E  8B 4D 08			mov		ecx, [ebp+8]	;size of buffer into ecx
 
 				;Read the input
 					getString	edx, ecx
- 0000014B  52		     1		push	edx
- 0000014C  51		     1		push	ecx
- 0000014D  8B D2	     1		mov  	edx, edx
- 0000014F  8B C9	     1		mov  	ecx, ecx
- 00000151  E8 00000000 E     1		call 	ReadString
- 00000156  59		     1		pop		ecx
- 00000157  5A		     1		pop		edx
+ 00000141  52		     1		push	edx
+ 00000142  51		     1		push	ecx
+ 00000143  8B D2	     1		mov  	edx, edx
+ 00000145  8B C9	     1		mov  	ecx, ecx
+ 00000147  E8 00000000 E     1		call 	ReadString
+ 0000014C  59		     1		pop		ecx
+ 0000014D  5A		     1		pop		edx
 
 				;Set registers
- 00000158  8B F2			mov		esi, edx
- 0000015A  B8 00000000			mov		eax, 0
- 0000015F  B9 00000000			mov		ecx, 0
- 00000164  BB 0000000A			mov		ebx, 10
+ 0000014E  8B F2			mov		esi, edx
+ 00000150  B8 00000000			mov		eax, 0
+ 00000155  B9 00000000			mov		ecx, 0
+ 0000015A  BB 0000000A			mov		ebx, 10
 
 				;Load the string in byte by byte
- 00000169			LoadByteLabel:
- 00000169  AC				lodsb					;loads from memory at esi
- 0000016A  66| 83 F8 00			cmp		ax, 0			;check if we have reached the end of the string
- 0000016E  74 2A			je		DoneLabel
+ 0000015F			LoadByteLabel:
+ 0000015F  AC				lodsb					;loads from memory at esi
+ 00000160  66| 83 F8 00			cmp		ax, 0			;check if we have reached the end of the string
+ 00000164  74 2A			je		DoneLabel
 
 				;Check the range if char is int in ASCII
- 00000170  66| 83 F8 30			cmp		ax, 48				;0 is ASCII 48
- 00000174  72 11			jb		ErrorLabel
- 00000176  66| 83 F8 39			cmp		ax, 57				;9 is ASCII 57
- 0000017A  77 0B			ja		ErrorLabel
+ 00000166  66| 83 F8 30			cmp		ax, 48				;0 is ASCII 48
+ 0000016A  72 11			jb		ErrorLabel
+ 0000016C  66| 83 F8 39			cmp		ax, 57				;9 is ASCII 57
+ 00000170  77 0B			ja		ErrorLabel
 
 				;Adjust for value of digit
- 0000017C  66| 83 E8 30			sub		ax, 48
- 00000180  91				xchg	eax, ecx
- 00000181  F7 E3			mul		ebx				;mult by 10 for correct digit place
- 00000183  72 02			jc		ErrorLabel
- 00000185  73 0E			jnc		NoErrorLabel
+ 00000172  66| 83 E8 30			sub		ax, 48
+ 00000176  91				xchg	eax, ecx
+ 00000177  F7 E3			mul		ebx				;mult by 10 for correct digit place
+ 00000179  72 02			jc		ErrorLabel
+ 0000017B  73 0E			jnc		NoErrorLabel
 
- 00000187			ErrorLabel:
+ 0000017D			ErrorLabel:
 					displayString	errorMsg
- 00000187  52		     1		push	edx
- 00000188  BA 00000205 R     1		mov		edx, OFFSET errorMsg
- 0000018D  E8 00000000 E     1		call	WriteString
- 00000192  5A		     1		pop		edx
- 00000193  EB B0			jmp				StartLabel
+ 0000017D  52		     1		push	edx
+ 0000017E  BA 00000205 R     1		mov		edx, OFFSET errorMsg
+ 00000183  E8 00000000 E     1		call	WriteString
+ 00000188  5A		     1		pop		edx
+ 00000189  EB B0			jmp				StartLabel
 
- 00000195			NoErrorLabel:
- 00000195  03 C1			add		eax, ecx
- 00000197  91				xchg	eax, ecx		;Exchange for the next loop through
- 00000198  EB CF			jmp		LoadByteLabel	;Parse next byte
+ 0000018B			NoErrorLabel:
+ 0000018B  03 C1			add		eax, ecx
+ 0000018D  91				xchg	eax, ecx		;Exchange for the next loop through
+ 0000018E  EB CF			jmp		LoadByteLabel	;Parse next byte
 					
- 0000019A			DoneLabel:
- 0000019A  91				xchg	ecx, eax
- 0000019B  A3 00000000 R		mov		DWORD PTR buffer, eax	;Save int in passed variable
- 000001A0  61				popad
- 000001A1  5D				pop ebp
- 000001A2  C2 0008			ret 8
- 000001A5			readVal ENDP
+ 00000190			DoneLabel:
+ 00000190  91				xchg	ecx, eax
+ 00000191  A3 00000000 R		mov		DWORD PTR buffer, eax	;Save int in passed variable
+ 00000196  61				popad
+ 00000197  5D				pop ebp
+ 00000198  C2 0008			ret 8
+ 0000019B			readVal ENDP
 
 				;----------------------------------------------------------------------------------------
 				; Procedure: WriteVal
 				; Description: Convert numeric value to a string of digits | Invoke displayString to produce output.
 				; Parameters: integer and string (memory) to write the output
 				;----------------------------------------------------------------------------------------
- 000001A5			writeVal PROC
- 000001A5  55				push	ebp
- 000001A6  8B EC			mov		ebp, esp
- 000001A8  60				pushad		;save registers
+ 0000019B			writeVal PROC
+ 0000019B  55				push	ebp
+ 0000019C  8B EC			mov		ebp, esp
+ 0000019E  60				pushad		;save registers
 
 				;Set for looping through the integer
- 000001A9  8B 45 0C			mov		eax, [ebp+12]	;move integer to convert to string to eax
- 000001AC  8B 7D 08			mov		edi, [ebp+8]	;move @address to edi to store string
- 000001AF  BB 0000000A			mov		ebx, 10
- 000001B4  6A 00			push	0
+ 0000019F  8B 45 0C			mov		eax, [ebp+12]	;move integer to convert to string to eax
+ 000001A2  8B 7D 08			mov		edi, [ebp+8]	;move @address to edi to store string
+ 000001A5  BB 0000000A			mov		ebx, 10
+ 000001AA  6A 00			push	0
 
- 000001B6			ConvertLabel:
- 000001B6  BA 00000000			mov		edx, 0
- 000001BB  F7 F3			div		ebx
- 000001BD  83 C2 30			add		edx, 48
- 000001C0  52				push	edx				;push next digit onto stack
+ 000001AC			ConvertLabel:
+ 000001AC  BA 00000000			mov		edx, 0
+ 000001B1  F7 F3			div		ebx
+ 000001B3  83 C2 30			add		edx, 48
+ 000001B6  52				push	edx				;push next digit onto stack
 
 				;Check if at end
- 000001C1  83 F8 00			cmp		eax, 0
- 000001C4  75 F0			jne		ConvertLabel
+ 000001B7  83 F8 00			cmp		eax, 0
+ 000001BA  75 F0			jne		ConvertLabel
 
 				;Pop numbers off the stack
- 000001C6			PopLabel:
- 000001C6  8F 07			pop		[edi]
- 000001C8  8B 07			mov		eax, [edi]
- 000001CA  47				inc		edi
- 000001CB  83 F8 00			cmp		eax, 0				;check if the end
- 000001CE  75 F6			jne		PopLabel
+ 000001BC			PopLabel:
+ 000001BC  8F 07			pop		[edi]
+ 000001BE  8B 07			mov		eax, [edi]
+ 000001C0  47				inc		edi
+ 000001C1  83 F8 00			cmp		eax, 0				;check if the end
+ 000001C4  75 F6			jne		PopLabel
 
 				;Write as string using macro
- 000001D0  8B 55 08			mov				edx, [ebp+8]
+ 000001C6  8B 55 08			mov				edx, [ebp+8]
 					displayString	OFFSET stringTemp
- 000001D3  52		     1		push	edx
- 000001D4  BA 000000FF R     1		mov		edx, OFFSET OFFSET stringTemp
- 000001D9  E8 00000000 E     1		call	WriteString
- 000001DE  5A		     1		pop		edx
- 000001DF  E8 00000000 E		call			CrLf
+ 000001C9  52		     1		push	edx
+ 000001CA  BA 000000FF R     1		mov		edx, OFFSET OFFSET stringTemp
+ 000001CF  E8 00000000 E     1		call	WriteString
+ 000001D4  5A		     1		pop		edx
+ 000001D5  E8 00000000 E		call			CrLf
 
- 000001E4  61				popad		;restore registers
- 000001E5  5D				pop ebp
- 000001E6  C2 0008			ret 8
- 000001E9			writeVal ENDP
+ 000001DA  61				popad		;restore registers
+ 000001DB  5D				pop ebp
+ 000001DC  C2 0008			ret 8
+ 000001DF			writeVal ENDP
 
 				END main
-Microsoft (R) Macro Assembler Version 10.00.30319.01	    06/06/15 20:20:51
+Microsoft (R) Macro Assembler Version 10.00.30319.01	    06/06/15 20:32:51
  Assignment 6     (Project06.asm			     Symbols 2 - 1
 
 
@@ -510,8 +508,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 000002A0 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 000001E9 Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000028B Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 000001DF Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -618,21 +616,21 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000141 Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000137 Public STDCALL
   userInputLabel . . . . . . . .	L Near	 00000053 _TEXT	
   sumAgainLabel  . . . . . . . .	L Near	 0000009A _TEXT	
-  noRoundLabel . . . . . . . . .	L Near	 00000103 _TEXT	
+  noRoundLabel . . . . . . . . .	L Near	 000000FE _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
-readVal  . . . . . . . . . . . .	P Near	 00000141 _TEXT	Length= 00000064 Public STDCALL
-  StartLabel . . . . . . . . . .	L Near	 00000145 _TEXT	
-  LoadByteLabel  . . . . . . . .	L Near	 00000169 _TEXT	
-  ErrorLabel . . . . . . . . . .	L Near	 00000187 _TEXT	
-  NoErrorLabel . . . . . . . . .	L Near	 00000195 _TEXT	
-  DoneLabel  . . . . . . . . . .	L Near	 0000019A _TEXT	
+readVal  . . . . . . . . . . . .	P Near	 00000137 _TEXT	Length= 00000064 Public STDCALL
+  StartLabel . . . . . . . . . .	L Near	 0000013B _TEXT	
+  LoadByteLabel  . . . . . . . .	L Near	 0000015F _TEXT	
+  ErrorLabel . . . . . . . . . .	L Near	 0000017D _TEXT	
+  NoErrorLabel . . . . . . . . .	L Near	 0000018B _TEXT	
+  DoneLabel  . . . . . . . . . .	L Near	 00000190 _TEXT	
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
-writeVal . . . . . . . . . . . .	P Near	 000001A5 _TEXT	Length= 00000044 Public STDCALL
-  ConvertLabel . . . . . . . . .	L Near	 000001B6 _TEXT	
-  PopLabel . . . . . . . . . . .	L Near	 000001C6 _TEXT	
+writeVal . . . . . . . . . . . .	P Near	 0000019B _TEXT	Length= 00000044 Public STDCALL
+  ConvertLabel . . . . . . . . .	L Near	 000001AC _TEXT	
+  PopLabel . . . . . . . . . . .	L Near	 000001BC _TEXT	
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 
 
@@ -766,7 +764,7 @@ STD_INPUT_HANDLE . . . . . . . .	Number	 -0000000Ah
 STD_OUTPUT_HANDLE  . . . . . . .	Number	 -0000000Bh   
 SetConsoleTitle  . . . . . . . .	Text   	 SetConsoleTitleA
 TAB  . . . . . . . . . . . . . .	Number	 00000009h   
-THENUM . . . . . . . . . . . . .	Number	 0000000Fh   
+THENUM . . . . . . . . . . . . .	Number	 0000000Ah   
 TRUE . . . . . . . . . . . . . .	Number	 00000001h   
 TRUNCATE_EXISTING  . . . . . . .	Number	 00000005h   
 VK_11  . . . . . . . . . . . . .	Number	 000000BDh   
@@ -850,8 +848,8 @@ VK_UP  . . . . . . . . . . . . .	Number	 00000026h
 WINDOW_BUFFER_SIZE_EVENT . . . .	Number	 00000004h   
 WriteConsoleOutputCharacter  . .	Text   	 WriteConsoleOutputCharacterA
 WriteConsole . . . . . . . . . .	Text   	 WriteConsoleA
-averageMsg . . . . . . . . . . .	Byte	 00000242 _DATA	
-average  . . . . . . . . . . . .	DWord	 00000260 _DATA	
+averageMsg . . . . . . . . . . .	Byte	 00000241 _DATA	
+average  . . . . . . . . . . . .	DWord	 0000025F _DATA	
 black  . . . . . . . . . . . . .	Number	 00000000h   
 blue . . . . . . . . . . . . . .	Number	 00000001h   
 brown  . . . . . . . . . . . . .	Number	 00000006h   
@@ -859,7 +857,7 @@ buffer . . . . . . . . . . . . .	Byte	 00000000 _DATA
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
 errorMsg . . . . . . . . . . . .	Byte	 00000205 _DATA	
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
-goodbyeMsg . . . . . . . . . . .	Byte	 00000253 _DATA	
+goodbyeMsg . . . . . . . . . . .	Byte	 00000252 _DATA	
 gray . . . . . . . . . . . . . .	Number	 00000008h   
 green  . . . . . . . . . . . . .	Number	 00000002h   
 introMsg0  . . . . . . . . . . .	Byte	 0000011F _DATA	
@@ -875,9 +873,9 @@ lightRed . . . . . . . . . . . .	Number	 0000000Ch
 magenta  . . . . . . . . . . . .	Number	 00000005h   
 red  . . . . . . . . . . . . . .	Number	 00000004h   
 stringTemp . . . . . . . . . . .	Byte	 000000FF _DATA	
-sumMsg . . . . . . . . . . . . .	Byte	 00000235 _DATA	
-sum  . . . . . . . . . . . . . .	DWord	 0000025C _DATA	
-theArray . . . . . . . . . . . .	DWord	 00000264 _DATA	
+sumMsg . . . . . . . . . . . . .	Byte	 00000234 _DATA	
+sum  . . . . . . . . . . . . . .	DWord	 0000025B _DATA	
+theArray . . . . . . . . . . . .	DWord	 00000263 _DATA	
 userPrompt . . . . . . . . . . .	Byte	 000001E9 _DATA	
 valueMsg . . . . . . . . . . . .	Byte	 00000227 _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   

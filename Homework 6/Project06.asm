@@ -36,7 +36,7 @@ displayString	MACRO	theString
 ENDM
 
 ;Constant for number of inputs
-	THENUM = 15
+	THENUM = 10
 
 .data
 	buffer			BYTE	255 DUP(0)
@@ -48,15 +48,15 @@ ENDM
 	introMsg3		BYTE	"of the integers, their sum, and their average value.",0
 	userPrompt		BYTE	"Enter an unsigned integer: ", 0
 	errorMsg		BYTE	"Invalid input, please try again: ",0
-	valueMsg		BYTE	"You entered: ",0
+	valueMsg		BYTE	"Your input: ",0
 	sumMsg			BYTE	"The sum is: ",0
 	averageMsg		BYTE	"The average is: ",0
-	goodbyeMsg		sBYTE	"Goodbye!", 0
+	goodbyeMsg		BYTE	"Goodbye!", 0
 
 	sum				DWORD	?
 	average			DWORD	?
 
-	theArray		DWORD	15 DUP(0)
+	theArray		DWORD	10 DUP(0)
 
 .code
 main PROC
@@ -91,7 +91,7 @@ userInputLabel:
 	mov		[edi], eax
 	add		edi, 4				;For next DWORD in array
 
-;Loop if not 15 values yet
+;Loop if not 10 values yet
 	loop	userInputLabel
 
 ;--------------------------------------------------------------------------------	
@@ -109,14 +109,13 @@ userInputLabel:
 ;Calculate the sum | Print numbers to console
 sumAgainLabel:
 	mov		eax, [esi]
-	add		ebx, eax	;add eax to the sum
+	add		ebx, eax				;add eax to the sum
 
 ;Push parameters eax and stringTemp | Call WriteVal
 	push	eax
 	push	OFFSET stringTemp
 	call	WriteVal
-	call	CrLf
-	add		esi, 4		;increment the array looper
+	add		esi, 4					;increment the array looper
 	loop	sumAgainLabel
 
 ;Display the sum
@@ -133,11 +132,11 @@ sumAgainLabel:
 ;--------------------------------------------------------------------------------	
 ;Calculate the average (sum in eax)
 
-;Clear edx | Move 15 into ebx
+;Clear edx | Move 10 into ebx
 	mov		ebx, THENUM
 	mov		edx, 0
 
-;Divide the sum by 15
+;Divide the sum by 10
 	div		ebx
 
 ;Determine if average needs to be rounded up
@@ -160,10 +159,10 @@ noRoundLabel:
 	push	OFFSET stringTemp
 	call	WriteVal
 	call	CrLf
-	call	CrLf
 
 ;--------------------------------------------------------------------------------	
 ;Display goodbye message
+
 	displayString	goodbyeMsg
 	call	CrLf
 
@@ -176,7 +175,6 @@ main ENDP
 ; the digits string to numbers and validates input.
 ; Parameters: OFFSET buffer, SIZEOF buffer
 ;----------------------------------------------------------------------------------------
-
 readVal PROC
 	push	ebp
 	mov		ebp, esp
